@@ -1,3 +1,19 @@
+// Declare thriveStack as a global variable
+declare global {
+  interface Window {
+    thriveStack: {
+      track: (events: Array<{
+        event_name: string;
+        properties: Record<string, string>;
+        user_id: string;
+        timestamp: string;
+      }>) => void;
+    };
+  }
+}
+
+const thriveStack = typeof window !== 'undefined' ? window.thriveStack : null;
+
 /**
  * Get email_id from query string parameter
  * @returns The email_id value from query string, or "unknown" if not found
@@ -22,14 +38,16 @@ export function logQueryParams(): void {
 
   if (Object.keys(params).length > 0) {
     console.log("=== Query Parameters ===");
-    thriveStack.track([{
-      "event_name": "survey_response",
-      "properties": {
-          ...params
-      },
-      "user_id": GetEmailIdFromQueryString(),
-      "timestamp": new Date().toISOString()
-  }]);
+    if (thriveStack) {
+      thriveStack.track([{
+        "event_name": "survey_response",
+        "properties": {
+            ...params
+        },
+        "user_id": GetEmailIdFromQueryString(),
+        "timestamp": new Date().toISOString()
+      }]);
+    }
   
     Object.entries(params).forEach(([key, value]) => {
       console.log(`- ${key}: ${value}`);

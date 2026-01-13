@@ -13,7 +13,11 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        roboto: ['Roboto', 'sans-serif'],
+      },
       colors: {
+        "thrive-blue": "hsl(var(--thrive-blue))",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
