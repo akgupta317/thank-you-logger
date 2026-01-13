@@ -47,6 +47,17 @@ const ThankYou = () => {
             {/* Personalized Details */}
             {(topic || emailId) && (
               <div className="pt-4 space-y-3 border-t border-border">
+                {emailId && (
+                  <div className="space-y-1">
+                    <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+                      Submitted by
+                    </p>
+                    <p className="text-base font-medium text-thrive-blue">
+                      {emailId}
+                    </p>
+                  </div>
+                )}
+
                 {topic && (
                   <div className="space-y-1">
                     <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">
@@ -54,17 +65,6 @@ const ThankYou = () => {
                     </p>
                     <p className="text-base font-medium text-gray-700">
                       {topic}
-                    </p>
-                  </div>
-                )}
-                
-                {emailId && (
-                  <div className="space-y-1">
-                    <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">
-                      Email
-                    </p>
-                    <p className="text-sm font-normal text-gray-700">
-                      {emailId}
                     </p>
                   </div>
                 )}
