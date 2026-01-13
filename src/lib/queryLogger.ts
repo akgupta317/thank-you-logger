@@ -1,4 +1,14 @@
 /**
+ * Get email_id from query string parameter
+ * @returns The email_id value from query string, or "unknown" if not found
+ */
+export function GetEmailIdFromQueryString(): string {
+  const urlParams = new URLSearchParams(window.location.search);
+  const emailId = urlParams.get('email_id');
+  return emailId || 'unknown';
+}
+
+/**
  * Central utility function to log query string parameters
  * This function parses the current URL's query parameters and logs them to the console
  */
@@ -12,6 +22,15 @@ export function logQueryParams(): void {
 
   if (Object.keys(params).length > 0) {
     console.log("=== Query Parameters ===");
+    thriveStack.track([{
+      "event_name": "survey_response",
+      "properties": {
+          ...params
+      },
+      "user_id": GetEmailIdFromQueryString(),
+      "timestamp": new Date().toISOString()
+  }]);
+  
     Object.entries(params).forEach(([key, value]) => {
       console.log(`- ${key}: ${value}`);
     });
